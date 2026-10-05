@@ -1,28 +1,29 @@
 import { FiArrowUpRight } from "react-icons/fi";
 import { ExternalLink } from "./ExternalLink";
 import { RichText } from "./RichText";
-import { Section } from "./Section";
+import { SectionHeading } from "./SectionHeading";
 
 export function Experience({ t }) {
   return (
-    <Section id="experience" title={t.ui.nav.experience}>
+    <section id="experience" className="section container" aria-labelledby="experience-title">
+      <SectionHeading id="experience-title" label={t.label} title={t.title} />
       <ol className="timeline">
-        {t.experience.map((job) => (
-          <li className="timeline__item" key={`${job.name}-${job.period}`}>
-            <img className="timeline__logo" src={job.logo} alt="" width="44" height="44" loading="lazy" />
-            <article className="card timeline__body">
-              <header className="timeline__header">
-                <h3 className="timeline__company">
+        {t.jobs.map((job) => (
+          <li className="job reveal" key={job.url + job.period}>
+            <img className="job__logo" src={job.logo} alt="" width="56" height="56" loading="lazy" />
+            <article className="job__card">
+              <header className="job__header">
+                <h3 className="job__company">
                   <ExternalLink href={job.url}>
                     {job.name}
-                    <FiArrowUpRight aria-hidden="true" className="icon-inline" />
+                    <FiArrowUpRight aria-hidden="true" className="job__company-icon" />
                   </ExternalLink>
                 </h3>
-                <span className="timeline__period">{job.period}</span>
+                <span className="job__period">{job.period}</span>
               </header>
-              <p className="timeline__role">{job.role}</p>
-              <p className="timeline__location">{job.location}</p>
-              <ul className="timeline__tasks">
+              <p className="job__role">{job.role}</p>
+              <p className="job__location">{job.location}</p>
+              <ul className="job__tasks">
                 {job.tasks.map((task) => (
                   <li key={task}>
                     <RichText text={task} />
@@ -33,6 +34,6 @@ export function Experience({ t }) {
           </li>
         ))}
       </ol>
-    </Section>
+    </section>
   );
 }

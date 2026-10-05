@@ -1,35 +1,27 @@
-import { FiActivity, FiCloud, FiCpu, FiDatabase, FiLayout, FiServer } from "react-icons/fi";
-import { Section } from "./Section";
-
-const ICONS = {
-  backend: <FiServer aria-hidden="true" />,
-  frontend: <FiLayout aria-hidden="true" />,
-  ai: <FiCpu aria-hidden="true" />,
-  databases: <FiDatabase aria-hidden="true" />,
-  cloud: <FiCloud aria-hidden="true" />,
-  practices: <FiActivity aria-hidden="true" />,
-};
+import { Bracketed } from "./Bracketed";
+import { SectionHeading } from "./SectionHeading";
+import { TechBadge } from "./TechBadge";
 
 export function Skills({ t }) {
   return (
-    <Section id="skills" title={t.ui.nav.skills}>
+    <section id="skills" className="section container" aria-labelledby="skills-title">
+      <SectionHeading id="skills-title" label={t.label} title={t.title} />
       <div className="skills">
-        {t.skills.map((group) => (
-          <article className="card skill-group" key={group.id}>
-            <h3 className="skill-group__title">
-              {ICONS[group.id]}
-              {group.title}
+        {t.groups.map((group) => (
+          <article className="skill-card reveal" key={group.id}>
+            <h3 className="skill-card__title">
+              <Bracketed>{group.id}</Bracketed>
             </h3>
-            <ul className="tags">
+            <ul className="skill-card__tiles">
               {group.items.map((item) => (
-                <li className="tag" key={item}>
-                  {item}
+                <li key={item}>
+                  <TechBadge name={item} />
                 </li>
               ))}
             </ul>
           </article>
         ))}
       </div>
-    </Section>
+    </section>
   );
 }

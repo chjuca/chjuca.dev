@@ -9,14 +9,12 @@
       content="Fullstack Engineer with 7 years of experience building production software with Node.js, NestJS, Python (FastAPI), Next.js, React and Angular, LLM agents and AWS infrastructure."
     />
     <meta name="author" content="Carlos Juca" />
-    <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b0f15" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#141827" />
     <link rel="canonical" href="https://chjuca.dev/" />
     <link rel="alternate" hreflang="es" href="https://chjuca.dev/?lang=es" />
     <link rel="alternate" hreflang="en" href="https://chjuca.dev/?lang=en" />
     <link rel="alternate" hreflang="x-default" href="https://chjuca.dev/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://avatars.githubusercontent.com" />
 
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://chjuca.dev/" />
@@ -29,10 +27,9 @@
     <meta name="twitter:card" content="summary" />
 
     <script>
-      // Apply the saved theme before first paint to avoid a light/dark flash.
+      // Dark is the default; apply a saved light choice before first paint.
       try {
-        var theme = localStorage.getItem("theme");
-        if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+        if (localStorage.getItem("theme") === "light") document.documentElement.dataset.theme = "light";
       } catch (e) {}
     </script>
   </head>

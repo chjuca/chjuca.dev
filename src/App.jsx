@@ -1,23 +1,30 @@
 import { useEffect } from "react";
 import { About } from "./components/About";
-import { Education } from "./components/Education";
+import { Connector } from "./components/Connector";
+import { Contact } from "./components/Contact";
 import { Experience } from "./components/Experience";
-import { GitHubRepos } from "./components/GitHubRepos";
+import { Footer } from "./components/Footer";
+import { Hero } from "./components/Hero";
+import { Marquee } from "./components/Marquee";
+import { NavBar } from "./components/NavBar";
 import { Projects } from "./components/Projects";
-import { Sidebar } from "./components/Sidebar";
+import { QuoteBand } from "./components/QuoteBand";
+import { RevealQuote } from "./components/RevealQuote";
+import { ScrollProgress } from "./components/ScrollProgress";
+import { SideRails } from "./components/SideRails";
 import { Skills } from "./components/Skills";
-import { content, profile } from "./data/content";
+import { content, profile, SECTIONS } from "./data/content";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useLanguage } from "./hooks/useLanguage";
+import { useRevealOnScroll } from "./hooks/useRevealOnScroll";
 import { useTheme } from "./hooks/useTheme";
-
-const SECTIONS = ["about", "experience", "skills", "education", "projects", "github"];
 
 export default function App() {
   const [language, setLanguage] = useLanguage();
   const [theme, toggleTheme] = useTheme();
   const activeSection = useActiveSection(SECTIONS);
   const t = content[language];
+  useRevealOnScroll(language);
 
   useEffect(() => {
     document.title = t.meta.title;
@@ -26,31 +33,33 @@ export default function App() {
 
   return (
     <>
-      <a className="skip-link" href="#content">
+      <a className="skip-link" href="#main">
         {t.ui.skipToContent}
       </a>
-      <div className="layout">
-        <Sidebar
-          t={t}
-          language={language}
-          sections={SECTIONS}
-          activeSection={activeSection}
-          theme={theme}
-          onToggleLanguage={() => setLanguage(language === "es" ? "en" : "es")}
-          onToggleTheme={toggleTheme}
-        />
-        <main id="content" className="content" tabIndex={-1}>
-          <About t={t} />
-          <Experience t={t} />
-          <Skills t={t} />
-          <Education t={t} />
-          <Projects t={t} />
-          <GitHubRepos t={t} />
-          <footer className="footer">
-            © {new Date().getFullYear()} {profile.name} · {t.ui.footer}
-          </footer>
-        </main>
-      </div>
+      <ScrollProgress />
+      <NavBar
+        t={t}
+        language={language}
+        activeSection={activeSection}
+        onToggleLanguage={() => setLanguage(language === "es" ? "en" : "es")}
+      />
+      <SideRails t={t} theme={theme} onToggleTheme={toggleTheme} />
+
+      <main id="main" tabIndex={-1}>
+        <Hero t={t.hero} cv={t.cv} scrollLabel={t.ui.scrollDown} />
+        <QuoteBand quote={t.quotes.band} />
+        <Experience t={t.experience} />
+        <Connector variant="right" />
+        <Skills t={t.skills} />
+        <RevealQuote quote={t.quotes.reveal} />
+        <Projects t={t.projects} ui={t.ui} />
+        <Marquee label={t.ui.moreOnGitHub} href={profile.github} />
+        <About t={t.about} />
+        <Connector variant="left" />
+        <Contact t={t.contact} />
+      </main>
+
+      <Footer text={t.ui.footer} />
     </>
   );
 }

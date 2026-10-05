@@ -1,27 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 const STORAGE_KEY = "theme";
 
-const darkQuery = () => window.matchMedia?.("(prefers-color-scheme: dark)");
-
-// index.html sets data-theme before first paint when the visitor picked a
-// theme; otherwise the operating system preference applies.
+// Dark is the default look; index.html applies a saved choice before first
+// paint, so this only mirrors what is already on <html>.
 function currentTheme() {
-  const explicit = document.documentElement.dataset.theme;
-  if (explicit === "light" || explicit === "dark") return explicit;
-  return darkQuery()?.matches ? "dark" : "light";
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
 }
 
 export function useTheme() {
   const [theme, setTheme] = useState(currentTheme);
-
-  useEffect(() => {
-    const query = darkQuery();
-    if (!query) return undefined;
-    const onChange = () => setTheme(currentTheme());
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
 
   const toggleTheme = useCallback(() => {
     const next = currentTheme() === "dark" ? "light" : "dark";

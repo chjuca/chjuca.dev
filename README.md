@@ -3,13 +3,15 @@
 Personal portfolio of Carlos Juca, Fullstack Engineer. Live at **[chjuca.dev](https://chjuca.dev)**.
 
 - Bilingual (Spanish / English): follows the browser language, remembers the visitor's choice, and accepts `?lang=es` or `?lang=en` for shareable links.
-- Light and dark themes: follows the OS setting, with a toggle that is remembered across visits.
+- Dark theme by default, with a light theme toggle that is remembered across visits.
+- Contact form with a live code preview; sending opens the visitor's email app (no backend or API keys).
 - Content mirrors the current CV, which can be downloaded from the site in either language.
 
 ## Stack
 
 - [React 19](https://react.dev) + [Vite](https://vite.dev)
 - Plain CSS with custom properties (no UI framework)
+- Self-hosted fonts via [Fontsource](https://fontsource.org): Poppins and JetBrains Mono
 - [react-icons](https://react-icons.github.io/react-icons/) (tree-shaken, only the icons used are bundled)
 - [Vitest](https://vitest.dev) + Testing Library, ESLint
 
@@ -32,11 +34,10 @@ npm run dev       # http://localhost:5173
 
 ## Updating the content
 
-All the text lives in [`src/data/content.js`](src/data/content.js), with one block per language (`es` and `en`): summary, highlights, experience, skills, education, projects and the UI labels. Wrap text in `**double asterisks**` to render it in bold.
+All the text lives in [`src/data/content.js`](src/data/content.js), with one block per language (`es` and `en`): hero, quotes, experience, skills, projects, about, contact and the UI labels. Technology logos and brand colors are mapped in [`src/components/TechBadge.jsx`](src/components/TechBadge.jsx). Wrap text in `**double asterisks**` to render it in bold.
 
 To publish a new CV, replace the PDFs in [`public/cv/`](public/cv/) keeping the same file names, or update the `cv` path of each language in `content.js`.
 
-The GitHub section shows a static list of pinned repositories (`repositories` in `content.js`), so no GitHub token is ever shipped to the browser.
 
 ## Project structure
 
@@ -50,7 +51,7 @@ src/
   assets/             Optimized WebP images (logos and project screenshots)
   components/         One component per section, plus small shared pieces
   data/content.js     All site content, per language
-  hooks/              Language, theme and active-section hooks
+  hooks/              Language, theme, active-section and reveal-on-scroll hooks
   App.jsx             Layout
   index.css           Design tokens, light/dark themes and styles
 ```
