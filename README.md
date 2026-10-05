@@ -44,7 +44,7 @@ To publish a new CV, replace the PDFs in [`public/cv/`](public/cv/) keeping the 
 ```
 public/
   cv/                 CV PDFs (ES / EN)
-  _headers            Cloudflare Pages headers (security + caching)
+  _headers            Response headers (security + caching)
   favicon.svg
   robots.txt, sitemap.xml
 src/
@@ -58,13 +58,12 @@ src/
 
 ## Deployment
 
-Hosted on [Cloudflare Pages](https://pages.cloudflare.com), connected to this repository: every push to `main` deploys to production and every other branch gets a preview URL.
+Hosted on [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/) as a static-assets Worker, connected to this repository through Workers Builds: every push to `main` deploys to production.
 
-| Setting                | Value           |
-| ---------------------- | --------------- |
-| Framework preset       | Vite            |
-| Build command          | `npm run build` |
-| Build output directory | `dist`          |
-| Node.js version        | from `.nvmrc`   |
+| Setting        | Value                |
+| -------------- | -------------------- |
+| Build command  | `npm run build`      |
+| Deploy command | `npx wrangler deploy` |
+| Node.js        | from `.nvmrc`        |
 
-[`public/_headers`](public/_headers) adds security headers and long-lived caching for the hashed files in `/assets`. The custom domain `chjuca.dev` is managed in the same Cloudflare account, with `www.chjuca.dev` redirecting to it.
+[`wrangler.jsonc`](wrangler.jsonc) serves the `dist/` folder; its `name` must match the Worker name in the dashboard. [`public/_headers`](public/_headers) adds security headers and long-lived caching for the hashed files in `/assets`. The custom domain `chjuca.dev` lives in the same Cloudflare account, with `www.chjuca.dev` redirecting to it.
