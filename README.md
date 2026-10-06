@@ -32,12 +32,27 @@ npm run dev       # http://localhost:5173
 | `npm test`        | Run the test suite once                      |
 | `npm run lint`    | Lint the project                             |
 
+## Pages
+
+| Path | Page |
+| --- | --- |
+| `/` | Home: hero, impact numbers, current role, stack, projects and a call to action |
+| `/experience` | Timeline of every job |
+| `/experience/:slug` | Job detail: impact, tasks and tech stack (`mapvx`, `exmerdev`, `liid`) |
+| `/projects` | All projects |
+| `/projects/:slug` | Project detail with screenshot and project facts |
+| `/about` | Profile, tech stack, education, languages and CV downloads |
+| `/contact` | Contact form with a live code preview |
+
+Routing uses [React Router](https://reactrouter.com) with view transitions between pages; the Worker serves `index.html` for every path (`not_found_handling` in `wrangler.jsonc`), and unknown paths render the in-app 404 page.
+
 ## Updating the content
 
-All the text lives in [`src/data/content.js`](src/data/content.js), with one block per language (`es` and `en`): hero, quotes, experience, skills, projects, about, contact and the UI labels. Technology logos and brand colors are mapped in [`src/components/TechBadge.jsx`](src/components/TechBadge.jsx). Wrap text in `**double asterisks**` to render it in bold.
+All the text lives in [`src/data/content.js`](src/data/content.js), with one block per language (`es` and `en`): UI labels, per-page texts, jobs, projects, skills, education and languages. Jobs and projects are looked up by `slug`, which is also their URL. Technology logos and brand colors are mapped in [`src/components/TechBadge.jsx`](src/components/TechBadge.jsx). Wrap text in `**double asterisks**` to render it in bold.
+
+When adding a job or project, also add its URL to [`public/sitemap.xml`](public/sitemap.xml).
 
 To publish a new CV, replace the PDFs in [`public/cv/`](public/cv/) keeping the same file names, or update the `cv` path of each language in `content.js`.
-
 
 ## Project structure
 
@@ -48,11 +63,13 @@ public/
   favicon.svg
   robots.txt, sitemap.xml
 src/
-  assets/             Optimized WebP images (logos and project screenshots)
-  components/         One component per section, plus small shared pieces
+  assets/             Optimized WebP images (avatar, logos, project screenshots)
+  components/         Shared UI pieces (cards, timeline, stack, navbar, footer...)
   data/content.js     All site content, per language
-  hooks/              Language, theme, active-section and reveal-on-scroll hooks
-  App.jsx             Layout
+  hooks/              Language, theme, page metadata, reveal-on-scroll and spotlight hooks
+  layouts/            Root layout shared by every page
+  pages/              One component per route
+  routes.js           Route table
   index.css           Design tokens, light/dark themes and styles
 ```
 

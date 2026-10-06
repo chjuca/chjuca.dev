@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
-import { SECTIONS } from "../data/content";
+import { FiGlobe, FiMenu, FiMoon, FiSun, FiX } from "react-icons/fi";
+import { Link, NavLink } from "react-router";
+import { LANGUAGE_NAMES, LANGUAGES, NAV_ITEMS } from "../data/content";
 import { Bracketed } from "./Bracketed";
 
-export function NavBar({ t, language, activeSection, onToggleLanguage }) {
+export function NavBar({ t, language, theme, onChangeLanguage, onToggleTheme }) {
   const [open, setOpen] = useState(false);
+  const themeLabel = theme === "dark" ? t.ui.themeToLight : t.ui.themeToDark;
 
   useEffect(() => {
     if (!open) return undefined;
@@ -18,38 +20,55 @@ export function NavBar({ t, language, activeSection, onToggleLanguage }) {
   return (
     <header className="navbar">
       <nav className={`navbar__pill${open ? " is-open" : ""}`} aria-label={t.ui.navLabel}>
-        <a className="navbar__brand" href="#home" onClick={() => setOpen(false)}>
+        <Link className="navbar__brand" to="/" viewTransition onClick={() => setOpen(false)}>
           <Bracketed>CJ</Bracketed>
-        </a>
+        </Link>
 
         <ul id="nav-links" className="navbar__links">
-          {SECTIONS.map((id) => (
-            <li key={id}>
-              <a
+          {NAV_ITEMS.map((item) => (
+            <li key={item.id}>
+              <NavLink
                 className="navbar__link"
-                href={`#${id}`}
-                aria-current={activeSection === id ? "location" : undefined}
+                to={item.to}
+                end={item.to === "/"}
+                viewTransition
                 onClick={() => setOpen(false)}
               >
-                <Bracketed>{t.ui.nav[id]}</Bracketed>
-              </a>
+                <Bracketed>{t.ui.nav[item.id]}</Bracketed>
+              </NavLink>
             </li>
           ))}
         </ul>
 
-        <button
-          type="button"
-          className="lang-switch"
-          data-lang={language}
-          onClick={onToggleLanguage}
-          aria-label={t.ui.switchLanguageLabel}
-          title={t.ui.switchLanguageLabel}
-        >
-          <span className="lang-switch__label" aria-hidden="true">
-            {language.toUpperCase()}
-          </span>
-          <span className="lang-switch__knob" aria-hidden="true" />
-        </button>
+        <div className="navbar__controls">
+          <div className="lang-toggle" role="group" aria-label={t.ui.languageLabel}>
+            <FiGlobe className="lang-toggle__icon" aria-hidden="true" />
+            {LANGUAGES.map((code) => (
+              <button
+                key={code}
+                type="button"
+                className="lang-toggle__option"
+                lang={code}
+                aria-pressed={language === code}
+                aria-label={LANGUAGE_NAMES[code]}
+                title={LANGUAGE_NAMES[code]}
+                onClick={() => onChangeLanguage(code)}
+              >
+                {code.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className="icon-button"
+            onClick={onToggleTheme}
+            aria-label={themeLabel}
+            title={themeLabel}
+          >
+            {theme === "dark" ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />}
+          </button>
+        </div>
 
         <button
           type="button"
