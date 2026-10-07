@@ -1,7 +1,68 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { routes } from "./routes";
+
+const step = (name, seconds) => ({
+  name,
+  status: "completed",
+  conclusion: "success",
+  startedAt: "2026-10-06T10:00:00Z",
+  completedAt: new Date(Date.parse("2026-10-06T10:00:00Z") + seconds * 1000).toISOString(),
+});
+
+const RUN = {
+  id: 1,
+  number: 12,
+  status: "completed",
+  conclusion: "success",
+  event: "push",
+  sha: "abc1234def5678",
+  message: "Add the live pipeline page",
+  author: "chjuca",
+  startedAt: "2026-10-06T10:00:00Z",
+  updatedAt: "2026-10-06T10:03:10Z",
+  url: "https://github.com/chjuca/chjuca.dev/actions/runs/1",
+};
+
+const PIPELINE = {
+  repo: "chjuca/chjuca.dev",
+  runs: [RUN],
+  latest: {
+    ...RUN,
+    jobs: [
+      {
+        name: "Build & test",
+        steps: [
+          step("Lint", 8),
+          step("Test", 21),
+          step("Build", 4),
+          step("Bundle budget", 1),
+          step("Lighthouse", 35),
+        ],
+      },
+      { name: "Deploy", steps: [step("Deploy", 18), step("Smoke test", 12)] },
+    ],
+  },
+};
+
+const METRICS = {
+  tests: { total: 30, passed: 30 },
+  coverage: { lines: 88.2 },
+  bundle: { jsGzip: 143_000, cssGzip: 9_000, budgetKb: { js: 170, css: 12 } },
+  lighthouse: { performance: 0.97, accessibility: 1, bestPractices: 1, seo: 1 },
+};
+
+function mockApi(responses) {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async (url) => {
+      const response = responses[url];
+      if (!response) return new Response("not found", { status: 404, headers: { "Content-Type": "text/html" } });
+      return Response.json(response.body, { status: response.status ?? 200 });
+    }),
+  );
+}
 
 function renderAt(path, language = "es") {
   localStorage.setItem("lang", language);
@@ -15,6 +76,51 @@ describe("site", () => {
     localStorage.clear();
     delete document.documentElement.dataset.theme;
     window.history.replaceState(null, "", "/");
+  });
+
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("shows the live pipeline with its stages, metrics and history", async () => {
+    mockApi({
+      "/api/pipeline": { body: PIPELINE },
+      "/metrics.json": { body: METRICS },
+      "/metrics-history.json": { body: [{ sha: "abc1234", jsGzip: 143_000 }] },
+    });
+    renderAt("/pipeline", "en");
+
+    expect(await screen.findByText(/Last deploy succeeded/, { selector: ".pipeline-status" })).toBeInTheDocument();
+    const graph = screen.getByRole("list", { name: "Stages of the latest pipeline" });
+    expect(within(graph).getAllByRole("button")).toHaveLength(8);
+    expect(within(graph).getByRole("button", { name: /^Lighthouse/ })).toHaveAttribute("data-state", "success");
+
+    fireEvent.click(within(graph).getByRole("button", { name: /^Tests/ }));
+    expect(screen.getByRole("heading", { level: 2, name: "Tests" })).toBeInTheDocument();
+    expect(screen.getByText("30 of 30 tests passed")).toBeInTheDocument();
+
+    expect(screen.getAllByText("97").length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: "Add the live pipeline page" })).toHaveAttribute("href", RUN.url);
+
+    fireEvent.click(screen.getByRole("button", { name: "Replay" }));
+    expect(screen.getByRole("button", { name: "Replaying…" })).toBeDisabled();
+  });
+
+  it("falls back to the deploy metrics when GitHub is unavailable", async () => {
+    mockApi({
+      "/api/pipeline": { body: { error: "github_unavailable" }, status: 502 },
+      "/metrics.json": { body: METRICS },
+    });
+    renderAt("/pipeline", "en");
+
+    expect(await screen.findByText("Couldn't load the live status from GitHub")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Metrics of the current deploy" })).toBeInTheDocument();
+    expect(screen.getByText("No deploys recorded yet.")).toBeInTheDocument();
+  });
+
+  it("links the site's own project to the live pipeline", () => {
+    renderAt("/projects/chjuca-dev", "en");
+
+    expect(screen.getByRole("heading", { level: 1, name: "chjuca.dev · Live CI/CD" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "See the live pipeline" })).toHaveAttribute("href", "/pipeline");
   });
 
   it("renders the home page in Spanish", () => {
@@ -56,7 +162,7 @@ describe("site", () => {
     renderAt("/projects", "en");
 
     expect(screen.getAllByText("Private project · no public demo")).toHaveLength(2);
-    expect(screen.getAllByText("Live site")).toHaveLength(1);
+    expect(screen.getAllByText("Live site")).toHaveLength(2);
     expect(screen.getByRole("link", { name: "LIV" })).toHaveAttribute("href", "/projects/liv");
   });
 

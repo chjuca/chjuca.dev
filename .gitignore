@@ -5,8 +5,10 @@
 /dist
 /build
 
-# testing
+# testing and pipeline reports
 /coverage
+/reports
+/.lighthouseci
 
 # env files
 .env

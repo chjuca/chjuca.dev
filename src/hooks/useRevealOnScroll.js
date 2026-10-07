@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 
-// Fades `.reveal` elements in the first time they enter the viewport. Content
-// stays visible when IntersectionObserver is missing or motion is reduced,
-// because the hiding CSS only applies under html.can-reveal.
+const PENDING = ".reveal:not([data-visible])";
+
+// Fades `.reveal` elements in the first time they enter the viewport,
+// including ones rendered later (e.g. after data loads). Content stays
+// visible when IntersectionObserver is missing or motion is reduced, because
+// the hiding CSS only applies under html.can-reveal.
 export function useRevealOnScroll(dependency) {
   useEffect(() => {
     const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -19,10 +22,24 @@ export function useRevealOnScroll(dependency) {
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
     );
+    const observeWithin = (root) => {
+      if (root.matches?.(PENDING)) observer.observe(root);
+      for (const element of root.querySelectorAll?.(PENDING) ?? []) observer.observe(element);
+    };
 
-    for (const element of document.querySelectorAll(".reveal:not([data-visible])")) {
-      observer.observe(element);
-    }
-    return () => observer.disconnect();
+    observeWithin(document);
+    const mutations = new MutationObserver((records) => {
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) observeWithin(node);
+        }
+      }
+    });
+    mutations.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutations.disconnect();
+    };
   }, [dependency]);
 }

@@ -5,7 +5,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 
 export default defineConfig([
-  globalIgnores(["dist", "build", "coverage"]),
+  globalIgnores(["dist", "build", "coverage", "reports", ".wrangler", ".lighthouseci"]),
   {
     files: ["**/*.{js,jsx}"],
     extends: [
@@ -20,7 +20,11 @@ export default defineConfig([
     },
   },
   {
-    files: ["*.config.js"],
+    files: ["*.config.js", "scripts/**/*.mjs"],
     languageOptions: { globals: globals.node },
+  },
+  {
+    files: ["worker/**/*.js"],
+    languageOptions: { globals: globals.worker },
   },
 ]);

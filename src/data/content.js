@@ -5,6 +5,7 @@ import mapvxLogo from "../assets/logos/mapvx.webp";
 import utplLogo from "../assets/logos/utpl.webp";
 import liidProject from "../assets/projects/liid.webp";
 import livProject from "../assets/projects/liv.webp";
+import pipelineProject from "../assets/projects/pipeline.webp";
 import reasProject from "../assets/projects/reas.webp";
 
 export const SITE_URL = "https://chjuca.dev";
@@ -18,6 +19,7 @@ export const NAV_ITEMS = [
   { id: "home", to: "/" },
   { id: "experience", to: "/experience" },
   { id: "projects", to: "/projects" },
+  { id: "pipeline", to: "/pipeline" },
   { id: "about", to: "/about" },
   { id: "contact", to: "/contact" },
 ];
@@ -71,6 +73,13 @@ const stacks = {
 };
 
 const projectBase = {
+  site: {
+    slug: "chjuca-dev",
+    url: "/pipeline",
+    image: pipelineProject,
+    logo: avatar,
+    tech: ["React", "GitHub Actions", "Cloudflare Workers", "Lighthouse", "Vitest"],
+  },
   ascendere: {
     slug: "ascendere",
     org: "LiiD · UTPL",
@@ -103,6 +112,7 @@ export const content = {
         home: "Inicio",
         experience: "Experiencia",
         projects: "Proyectos",
+        pipeline: "Pipeline",
         about: "Sobre mí",
         contact: "Contacto",
       },
@@ -119,6 +129,7 @@ export const content = {
       viewDetails: "Ver detalle",
       viewProject: "Ver proyecto",
       visitSite: "Visitar sitio",
+      viewPipeline: "Ver el pipeline en vivo",
       privateProject: "Proyecto privado · sin demo pública",
       publicProject: "Sitio público",
       screenshot: (name) => `Captura de pantalla de ${name}`,
@@ -186,7 +197,7 @@ export const content = {
       projects: {
         meta: {
           title: "Proyectos — Carlos Juca",
-          description: "Proyectos de Carlos Juca: Ascendere, Recursos Educativos Abiertos y LIV.",
+          description: "Proyectos de Carlos Juca: chjuca.dev con CI/CD en vivo, Ascendere, Recursos Educativos Abiertos y LIV.",
         },
         label: "Proyectos",
         title: "Mis proyectos",
@@ -198,6 +209,104 @@ export const content = {
         roleLabel: "Mi rol",
         stackLabel: "Tecnologías",
         statusLabel: "Disponibilidad",
+      },
+      pipeline: {
+        meta: {
+          title: "Pipeline — Carlos Juca",
+          description:
+            "El pipeline de CI/CD de chjuca.dev en vivo: pruebas, Lighthouse, deploy a Cloudflare Workers y smoke tests.",
+        },
+        label: "Pipeline",
+        title: "Así se construye y despliega este sitio",
+        intro:
+          "Cada cambio que subo pasa por este pipeline de CI/CD público antes de llegar a producción. Lo que ves aquí son datos reales y en vivo de GitHub Actions.",
+        graphLabel: "Etapas del último pipeline",
+        status: {
+          loading: "Cargando el estado en vivo…",
+          error: "No se pudo cargar el estado en vivo de GitHub",
+          none: "Aún no hay ejecuciones",
+          running: "Desplegando ahora",
+          success: "Último deploy exitoso",
+          failure: "El último pipeline falló",
+          cancelled: "El último pipeline se canceló",
+        },
+        states: {
+          success: "Completado",
+          failure: "Falló",
+          running: "En curso",
+          pending: "Pendiente",
+          skipped: "Omitido",
+        },
+        stages: {
+          commit: { name: "Commit", description: "Un push a la rama main dispara el pipeline en GitHub Actions." },
+          lint: { name: "Lint", description: "ESLint revisa el código, incluidas las reglas de React Hooks." },
+          test: {
+            name: "Pruebas",
+            description:
+              "Vitest y Testing Library prueban las páginas, la navegación y la API del pipeline, con reporte de cobertura.",
+          },
+          build: { name: "Build", description: "Vite genera la versión optimizada del sitio." },
+          budget: {
+            name: "Presupuesto",
+            description: "Falla si el JavaScript o el CSS comprimidos superan su tamaño máximo.",
+          },
+          lighthouse: {
+            name: "Lighthouse",
+            description:
+              "Mide rendimiento, accesibilidad, buenas prácticas y SEO, y bloquea el deploy si alguno baja del mínimo.",
+          },
+          deploy: { name: "Deploy", description: "Wrangler publica el sitio y esta API en Cloudflare Workers." },
+          smoke: {
+            name: "Smoke test",
+            description:
+              "Ya en producción, espera a que la nueva versión esté en línea y verifica que las páginas, los CVs y la API respondan.",
+          },
+        },
+        replay: "Reproducir",
+        replaying: "Reproduciendo…",
+        viewRun: "Ver en GitHub",
+        viewWorkflow: "Ver el workflow",
+        sourceCode: "Ver el código del sitio",
+        detailsDuration: "Duración",
+        commitBy: "por",
+        liveSite: "Sitio en producción",
+        testsTitle: "Pruebas",
+        testsValue: (passed, total) => `${passed} de ${total} pruebas pasaron`,
+        coverage: "Cobertura de líneas",
+        jsLabel: "JavaScript (gzip)",
+        cssLabel: "CSS (gzip)",
+        budgetOf: (kb) => `de ${kb} KB permitidos`,
+        qualityLabel: "Calidad",
+        qualityTitle: "Métricas del deploy actual",
+        lighthouseTitle: "Lighthouse",
+        lighthouseNote: "Medición móvil, mediana de 3 ejecuciones en cada deploy.",
+        lighthouseLabels: {
+          performance: "Rendimiento",
+          accessibility: "Accesibilidad",
+          bestPractices: "Buenas prácticas",
+          seo: "SEO",
+        },
+        bundleTitle: "Tamaño del bundle",
+        historyLabel: "Historial",
+        historyTitle: "Últimos deploys",
+        historyEmpty: "Todavía no hay deploys registrados.",
+        trendTitle: "JavaScript por deploy (gzip)",
+        howLabel: "Arquitectura",
+        howTitle: "Cómo funciona, a costo $0",
+        how: [
+          {
+            title: "GitHub Actions",
+            text: "El pipeline corre en GitHub Actions, gratis para repositorios públicos. Las métricas de cada build viajan con el sitio en metrics.json, sin base de datos.",
+          },
+          {
+            title: "Cloudflare Workers",
+            text: "El mismo Worker sirve el sitio y una pequeña API que lee el estado de GitHub Actions y lo guarda en caché unos segundos, dentro del plan gratuito.",
+          },
+          {
+            title: "Calidad como requisito",
+            text: "Si una prueba falla, el bundle crece de más o Lighthouse baja del mínimo, el cambio no llega a producción.",
+          },
+        ],
       },
       about: {
         meta: {
@@ -314,6 +423,14 @@ export const content = {
     ],
     projects: [
       {
+        ...projectBase.site,
+        name: "chjuca.dev · CI/CD en vivo",
+        org: "Proyecto personal",
+        role: "Autor",
+        summary:
+          "Este mismo sitio, con un pipeline público de GitHub Actions: lint, pruebas con cobertura, presupuesto de tamaño, Lighthouse, deploy a Cloudflare Workers y smoke tests en producción. Su estado se ve en vivo.",
+      },
+      {
         ...projectBase.ascendere,
         name: "Proyecto Ascendere",
         role: "Backend Developer",
@@ -357,6 +474,7 @@ export const content = {
         home: "Home",
         experience: "Experience",
         projects: "Projects",
+        pipeline: "Pipeline",
         about: "About me",
         contact: "Contact",
       },
@@ -373,6 +491,7 @@ export const content = {
       viewDetails: "View details",
       viewProject: "View project",
       visitSite: "Visit site",
+      viewPipeline: "See the live pipeline",
       privateProject: "Private project · no public demo",
       publicProject: "Live site",
       screenshot: (name) => `Screenshot of ${name}`,
@@ -440,7 +559,7 @@ export const content = {
       projects: {
         meta: {
           title: "Projects — Carlos Juca",
-          description: "Projects by Carlos Juca: Ascendere, Open Educational Resources and LIV.",
+          description: "Projects by Carlos Juca: chjuca.dev with live CI/CD, Ascendere, Open Educational Resources and LIV.",
         },
         label: "Projects",
         title: "My projects",
@@ -452,6 +571,104 @@ export const content = {
         roleLabel: "My role",
         stackLabel: "Tech stack",
         statusLabel: "Availability",
+      },
+      pipeline: {
+        meta: {
+          title: "Pipeline — Carlos Juca",
+          description:
+            "chjuca.dev's live CI/CD pipeline: tests, Lighthouse, deploys to Cloudflare Workers and smoke tests.",
+        },
+        label: "Pipeline",
+        title: "How this site is built and deployed",
+        intro:
+          "Every change I push goes through this public CI/CD pipeline before reaching production. What you see here is real, live data from GitHub Actions.",
+        graphLabel: "Stages of the latest pipeline",
+        status: {
+          loading: "Loading the live status…",
+          error: "Couldn't load the live status from GitHub",
+          none: "No runs yet",
+          running: "Deploying now",
+          success: "Last deploy succeeded",
+          failure: "The last pipeline failed",
+          cancelled: "The last pipeline was cancelled",
+        },
+        states: {
+          success: "Done",
+          failure: "Failed",
+          running: "Running",
+          pending: "Pending",
+          skipped: "Skipped",
+        },
+        stages: {
+          commit: { name: "Commit", description: "A push to the main branch triggers the pipeline on GitHub Actions." },
+          lint: { name: "Lint", description: "ESLint checks the code, including the React Hooks rules." },
+          test: {
+            name: "Tests",
+            description:
+              "Vitest and Testing Library test the pages, the navigation and the pipeline API, with a coverage report.",
+          },
+          build: { name: "Build", description: "Vite produces the optimized build of the site." },
+          budget: {
+            name: "Budget",
+            description: "Fails when the gzipped JavaScript or CSS grows past its maximum size.",
+          },
+          lighthouse: {
+            name: "Lighthouse",
+            description:
+              "Measures performance, accessibility, best practices and SEO, and blocks the deploy if any drops below the minimum.",
+          },
+          deploy: { name: "Deploy", description: "Wrangler publishes the site and this API to Cloudflare Workers." },
+          smoke: {
+            name: "Smoke test",
+            description:
+              "Once in production, waits for the new version to be live and checks that the pages, the CVs and the API respond.",
+          },
+        },
+        replay: "Replay",
+        replaying: "Replaying…",
+        viewRun: "View on GitHub",
+        viewWorkflow: "View the workflow",
+        sourceCode: "View the site's code",
+        detailsDuration: "Duration",
+        commitBy: "by",
+        liveSite: "Live site",
+        testsTitle: "Tests",
+        testsValue: (passed, total) => `${passed} of ${total} tests passed`,
+        coverage: "Line coverage",
+        jsLabel: "JavaScript (gzip)",
+        cssLabel: "CSS (gzip)",
+        budgetOf: (kb) => `of ${kb} KB allowed`,
+        qualityLabel: "Quality",
+        qualityTitle: "Metrics of the current deploy",
+        lighthouseTitle: "Lighthouse",
+        lighthouseNote: "Mobile run, median of 3 runs on every deploy.",
+        lighthouseLabels: {
+          performance: "Performance",
+          accessibility: "Accessibility",
+          bestPractices: "Best practices",
+          seo: "SEO",
+        },
+        bundleTitle: "Bundle size",
+        historyLabel: "History",
+        historyTitle: "Latest deploys",
+        historyEmpty: "No deploys recorded yet.",
+        trendTitle: "JavaScript per deploy (gzip)",
+        howLabel: "Architecture",
+        howTitle: "How it works, at $0",
+        how: [
+          {
+            title: "GitHub Actions",
+            text: "The pipeline runs on GitHub Actions, free for public repositories. Each build's metrics ship with the site in metrics.json, no database needed.",
+          },
+          {
+            title: "Cloudflare Workers",
+            text: "The same Worker serves the site and a small API that reads the GitHub Actions status and caches it for a few seconds, within the free plan.",
+          },
+          {
+            title: "Quality as a gate",
+            text: "If a test fails, the bundle grows too much or Lighthouse drops below the minimum, the change never reaches production.",
+          },
+        ],
       },
       about: {
         meta: {
@@ -567,6 +784,14 @@ export const content = {
       },
     ],
     projects: [
+      {
+        ...projectBase.site,
+        name: "chjuca.dev · Live CI/CD",
+        org: "Personal project",
+        role: "Author",
+        summary:
+          "This very site, with a public GitHub Actions pipeline: lint, tests with coverage, a size budget, Lighthouse, deploys to Cloudflare Workers and production smoke tests. Its status is visible live.",
+      },
       {
         ...projectBase.ascendere,
         name: "Ascendere Project",

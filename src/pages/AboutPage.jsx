@@ -29,7 +29,7 @@ export function AboutPage() {
 
   return (
     <>
-      <PageHeader index="03" label={page.label} title={page.title} />
+      <PageHeader index="04" label={page.label} title={page.title} />
 
       <section className="section section--tight container" aria-label={page.title}>
         <div className="about">

@@ -85,7 +85,7 @@ export function HomePage() {
       <section className="section container" aria-labelledby="projects-title">
         <SectionHeading id="projects-title" label={home.projectsLabel} title={home.projectsTitle} align="center" />
         <div className="project-grid">
-          {t.projects.map((project) => (
+          {t.projects.slice(0, 3).map((project) => (
             <ProjectCard key={project.slug} project={project} ui={t.ui} />
           ))}
         </div>

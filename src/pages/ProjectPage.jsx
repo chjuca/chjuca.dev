@@ -1,5 +1,5 @@
-import { FiExternalLink } from "react-icons/fi";
-import { useOutletContext, useParams } from "react-router";
+import { FiActivity, FiExternalLink } from "react-icons/fi";
+import { Link, useOutletContext, useParams } from "react-router";
 import { BackLink } from "../components/BackLink";
 import { Bracketed } from "../components/Bracketed";
 import { ExternalLink } from "../components/ExternalLink";
@@ -20,6 +20,8 @@ export function ProjectPage() {
   );
 
   if (!project) return <NotFoundPage />;
+  // Paths inside this site (e.g. /pipeline) use the router instead of a new tab.
+  const internal = project.url?.startsWith("/");
 
   return (
     <article className="detail container">
@@ -34,7 +36,12 @@ export function ProjectPage() {
           <h1 className="detail__title">{project.name}</h1>
           {project.role && <p className="detail__subtitle">{project.role}</p>}
           <p className="detail__lead">{project.summary}</p>
-          {project.url ? (
+          {internal ? (
+            <Link className="button button--primary" to={project.url} viewTransition>
+              <FiActivity aria-hidden="true" />
+              {t.ui.viewPipeline}
+            </Link>
+          ) : project.url ? (
             <ExternalLink className="button button--primary" href={project.url}>
               <FiExternalLink aria-hidden="true" />
               {t.ui.visitSite}
@@ -73,7 +80,11 @@ export function ProjectPage() {
           <div>
             <dt>{page.statusLabel}</dt>
             <dd>
-              {project.url ? (
+              {internal ? (
+                <Link to={project.url} viewTransition>
+                  chjuca.dev{project.url}
+                </Link>
+              ) : project.url ? (
                 <ExternalLink href={project.url}>{new URL(project.url).hostname}</ExternalLink>
               ) : (
                 t.ui.privateProject

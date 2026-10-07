@@ -1,6 +1,7 @@
 import { FaAws, FaJava } from "react-icons/fa6";
 import {
   SiAngular,
+  SiCloudflareworkers,
   SiDocker,
   SiElasticstack,
   SiExpress,
@@ -12,6 +13,7 @@ import {
   SiLangchain,
   SiLanggraph,
   SiLeaflet,
+  SiLighthouse,
   SiMapbox,
   SiMongodb,
   SiMysql,
@@ -28,6 +30,8 @@ import {
   SiTerraform,
   SiTypescript,
   SiUptimekuma,
+  SiVite,
+  SiVitest,
 } from "react-icons/si";
 import { TbCloudCog, TbCode, TbDatabase, TbTopologyStar3 } from "react-icons/tb";
 
@@ -66,6 +70,10 @@ const TECH = {
   Terraform: [<SiTerraform />, "#844fba"],
   Docker: [<SiDocker />, "#2496ed"],
   "GitHub Actions": [<SiGithubactions />, "#2088ff"],
+  "Cloudflare Workers": [<SiCloudflareworkers />, "#f38020"],
+  Lighthouse: [<SiLighthouse />, "#f44b21"],
+  Vite: [<SiVite />, "#8f84ff"],
+  Vitest: [<SiVitest />, "#7fb61f"],
   Nginx: [<SiNginx />, "#009639"],
   "Elastic Stack": [<SiElasticstack />, "#00bfb3"],
   CloudWatch: [<TbCloudCog />, "#ff4f8b"],

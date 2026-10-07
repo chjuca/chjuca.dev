@@ -10,7 +10,7 @@ export function ContactPage() {
 
   return (
     <>
-      <PageHeader index="04" label={page.label} title={page.title} />
+      <PageHeader index="05" label={page.label} title={page.title} />
       <section className="section section--tight container" aria-label={page.label}>
         <ContactForm t={page.form} />
       </section>
