@@ -66,6 +66,7 @@ describe("pipeline stages", () => {
 describe("formatting", () => {
   it("formats durations", () => {
     expect(formatDuration(null)).toBe("—");
+    expect(formatDuration(0)).toBe("<1 s");
     expect(formatDuration(12_400)).toBe("12 s");
     expect(formatDuration(72_000)).toBe("1 min 12 s");
     expect(formatDuration(120_000)).toBe("2 min");

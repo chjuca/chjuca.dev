@@ -52,6 +52,7 @@ export function buildStages(latest) {
 
 export function formatDuration(ms) {
   if (ms == null) return "—";
+  if (ms < 1000) return "<1 s";
   const seconds = Math.round(ms / 1000);
   if (seconds < 60) return `${seconds} s`;
   const minutes = Math.floor(seconds / 60);
