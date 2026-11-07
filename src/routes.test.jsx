@@ -127,12 +127,12 @@ describe("site", () => {
     renderAt("/");
 
     expect(screen.getByRole("heading", { level: 1, name: "Hola, soy Carlos" })).toBeInTheDocument();
-    expect(screen.getByText("5.000 → 900 ms")).toBeInTheDocument();
+    expect(screen.getByText("< 1 ms")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Descargar CV" })).toHaveAttribute(
       "href",
-      "/cv/Carlos-Juca-Fullstack-ES.pdf",
+      "/cv/ES-chjuca-Software-Engineer.pdf",
     );
-    expect(document.title).toBe("Carlos Juca — Fullstack Engineer");
+    expect(document.title).toBe("Carlos Juca — Software Engineer");
     expect(document.documentElement.lang).toBe("es");
   });
 
@@ -151,8 +151,8 @@ describe("site", () => {
   it("shows a job detail page with its tasks, stack and neighbours", () => {
     renderAt("/experience/mapvx");
 
-    expect(screen.getByRole("heading", { level: 1, name: "Fullstack Developer" })).toBeInTheDocument();
-    expect(screen.getByText("reduciendo el tiempo de respuesta de 5.000 ms a 900 ms").tagName).toBe("STRONG");
+    expect(screen.getByRole("heading", { level: 1, name: "Ingeniero de Software (Full Stack y DevOps)" })).toBeInTheDocument();
+    expect(screen.getByText("bajando la latencia a menos de un milisegundo").tagName).toBe("STRONG");
     expect(screen.getByText("Kubernetes")).toBeInTheDocument();
     const pager = screen.getByRole("navigation", { name: "Anterior y siguiente" });
     expect(within(pager).getByRole("link", { name: /ExmerDev/ })).toHaveAttribute("href", "/experience/exmerdev");

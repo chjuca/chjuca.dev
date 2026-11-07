@@ -1,8 +1,12 @@
 import { FaAws, FaJava } from "react-icons/fa6";
 import {
   SiAngular,
+  SiAnthropic,
+  SiArgo,
+  SiClaude,
   SiCloudflareworkers,
   SiDocker,
+  SiElasticsearch,
   SiElasticstack,
   SiExpress,
   SiFastapi,
@@ -15,6 +19,7 @@ import {
   SiLeaflet,
   SiLighthouse,
   SiMapbox,
+  SiModelcontextprotocol,
   SiMongodb,
   SiMysql,
   SiNestjs,
@@ -25,6 +30,7 @@ import {
   SiPython,
   SiRabbitmq,
   SiReact,
+  SiRedis,
   SiSpring,
   SiSpringboot,
   SiTerraform,
@@ -33,7 +39,7 @@ import {
   SiVite,
   SiVitest,
 } from "react-icons/si";
-import { TbCloudCog, TbCode, TbDatabase, TbTopologyStar3 } from "react-icons/tb";
+import { TbBrain, TbChartDots, TbCloudCog, TbCode, TbDatabase, TbDatabaseSearch, TbTopologyStar3 } from "react-icons/tb";
 
 const TEXT = "var(--text)";
 const LAVENDER = "var(--lavender)";
@@ -58,16 +64,27 @@ const TECH = {
   Leaflet: [<SiLeaflet />, "#5fbf3f"],
   LangChain: [<SiLangchain />, "#3fb4a3"],
   LangGraph: [<SiLanggraph />, "#3fb4a3"],
+  "OpenAI API": [<TbBrain />, "#10a37f"],
+  "Claude API": [<SiClaude />, "#d97757"],
+  "Claude Code": [<SiAnthropic />, "#d97757"],
+  "AWS Bedrock": [<FaAws />, "#ff9900"],
+  RAG: [<TbDatabaseSearch />, "#8a94ff"],
+  Langfuse: [<TbChartDots />, "#0ea5e9"],
+  MCP: [<SiModelcontextprotocol />, TEXT],
   n8n: [<TbTopologyStar3 />, "#ea4b71"],
   PostgreSQL: [<SiPostgresql />, "#4f7ee8"],
+  pgvector: [<SiPostgresql />, "#4f7ee8"],
   MySQL: [<SiMysql />, "#5d9cd6"],
   MongoDB: [<SiMongodb />, "#47a248"],
   DocumentDB: [<TbDatabase />, "#527fff"],
+  Redis: [<SiRedis />, "#ff4438"],
+  Elasticsearch: [<SiElasticsearch />, "#fec514"],
   Firebase: [<SiFirebase />, "#ffca28"],
   AWS: [<FaAws />, "#ff9900"],
   Kubernetes: [<SiKubernetes />, "#326ce5"],
   Helm: [<SiHelm />, "#8a94ff"],
   Terraform: [<SiTerraform />, "#844fba"],
+  ArgoCD: [<SiArgo />, "#ef7b4d"],
   Docker: [<SiDocker />, "#2496ed"],
   "GitHub Actions": [<SiGithubactions />, "#2088ff"],
   "Cloudflare Workers": [<SiCloudflareworkers />, "#f38020"],

@@ -82,11 +82,11 @@ export function AboutPage() {
             <h3 className="info-card__title">{page.cvTitle}</h3>
             <p className="info-card__text">{page.cvText}</p>
             <div className="info-card__actions">
-              <a className="button button--primary button--small" href="/cv/Carlos-Juca-Fullstack-ES.pdf" download>
+              <a className="button button--primary button--small" href="/cv/ES-chjuca-Software-Engineer.pdf" download>
                 <FiDownload aria-hidden="true" />
                 {page.cvEs}
               </a>
-              <a className="button button--dark button--small" href="/cv/Carlos-Juca-Fullstack-EN.pdf" download>
+              <a className="button button--dark button--small" href="/cv/EN-chjuca-Software-Engineer.pdf" download>
                 <FiDownload aria-hidden="true" />
                 {page.cvEn}
               </a>

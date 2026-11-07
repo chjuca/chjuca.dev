@@ -1,6 +1,6 @@
 # Carlos Juca — Portfolio
 
-Personal portfolio of Carlos Juca, Fullstack Engineer. Live at **[chjuca.dev](https://chjuca.dev)**.
+Personal portfolio of Carlos Juca, Software Engineer (Full Stack). Live at **[chjuca.dev](https://chjuca.dev)**.
 
 [![CI/CD](https://github.com/chjuca/chjuca.dev/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/chjuca/chjuca.dev/actions/workflows/ci-cd.yml) · Live pipeline: **[chjuca.dev/pipeline](https://chjuca.dev/pipeline)**
 
