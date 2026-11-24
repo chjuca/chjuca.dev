@@ -5,6 +5,7 @@ import {
   SiArgo,
   SiClaude,
   SiCloudflareworkers,
+  SiCss,
   SiDocker,
   SiElasticsearch,
   SiElasticstack,
@@ -12,7 +13,10 @@ import {
   SiFastapi,
   SiFirebase,
   SiGithubactions,
+  SiGooglecloud,
   SiHelm,
+  SiHtml5,
+  SiJest,
   SiKubernetes,
   SiLangchain,
   SiLanggraph,
@@ -27,6 +31,7 @@ import {
   SiNginx,
   SiNodedotjs,
   SiPostgresql,
+  SiPytest,
   SiPython,
   SiRabbitmq,
   SiReact,
@@ -34,12 +39,13 @@ import {
   SiSpring,
   SiSpringboot,
   SiTerraform,
+  SiTestinglibrary,
   SiTypescript,
   SiUptimekuma,
   SiVite,
   SiVitest,
 } from "react-icons/si";
-import { TbBrain, TbChartDots, TbCloudCog, TbCode, TbDatabase, TbDatabaseSearch, TbTopologyStar3 } from "react-icons/tb";
+import { TbBrain, TbBrandAzure, TbChartDots, TbCloudCog, TbCode, TbDatabase, TbDatabaseSearch, TbTopologyStar3 } from "react-icons/tb";
 
 const TEXT = "var(--text)";
 const LAVENDER = "var(--lavender)";
@@ -81,6 +87,8 @@ const TECH = {
   Elasticsearch: [<SiElasticsearch />, "#fec514"],
   Firebase: [<SiFirebase />, "#ffca28"],
   AWS: [<FaAws />, "#ff9900"],
+  Azure: [<TbBrandAzure />, "#0078d4"],
+  GCP: [<SiGooglecloud />, "#4285f4"],
   Kubernetes: [<SiKubernetes />, "#326ce5"],
   Helm: [<SiHelm />, "#8a94ff"],
   Terraform: [<SiTerraform />, "#844fba"],
@@ -93,6 +101,11 @@ const TECH = {
   Vitest: [<SiVitest />, "#7fb61f"],
   Nginx: [<SiNginx />, "#009639"],
   "Elastic Stack": [<SiElasticstack />, "#00bfb3"],
+  Jest: [<SiJest />, "#c21325"],
+  Pytest: [<SiPytest />, "#0a9edc"],
+  "React Testing Library": [<SiTestinglibrary />, "#e33332"],
+  CSS: [<SiCss />, "#663399"],
+  HTML: [<SiHtml5 />, "#e34f26"],
   CloudWatch: [<TbCloudCog />, "#ff4f8b"],
   "Uptime Kuma": [<SiUptimekuma />, "#5cdd8b"],
 };

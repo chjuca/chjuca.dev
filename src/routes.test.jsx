@@ -132,7 +132,7 @@ describe("site", () => {
       "href",
       "/cv/ES-chjuca-Software-Engineer.pdf",
     );
-    expect(document.title).toBe("Carlos Juca — Software Engineer");
+    expect(document.title).toBe("Carlos Juca — AI Engineer | Full Stack Developer");
     expect(document.documentElement.lang).toBe("es");
   });
 
@@ -152,7 +152,7 @@ describe("site", () => {
     renderAt("/experience/mapvx");
 
     expect(screen.getByRole("heading", { level: 1, name: "Ingeniero de Software (Full Stack y DevOps)" })).toBeInTheDocument();
-    expect(screen.getByText("bajando la latencia a menos de un milisegundo").tagName).toBe("STRONG");
+    expect(screen.getByText("menos de un milisegundo").tagName).toBe("STRONG");
     expect(screen.getByText("Kubernetes")).toBeInTheDocument();
     const pager = screen.getByRole("navigation", { name: "Anterior y siguiente" });
     expect(within(pager).getByRole("link", { name: /ExmerDev/ })).toHaveAttribute("href", "/experience/exmerdev");
