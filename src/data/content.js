@@ -5,6 +5,7 @@ import mapvxLogo from "../assets/logos/mapvx.webp";
 import utplLogo from "../assets/logos/utpl.webp";
 import liidProject from "../assets/projects/liid.webp";
 import livProject from "../assets/projects/liv.webp";
+import notificationsProject from "../assets/projects/notifications.webp";
 import pipelineProject from "../assets/projects/pipeline.webp";
 import reasProject from "../assets/projects/reas.webp";
 
@@ -86,6 +87,13 @@ const projectBase = {
     image: pipelineProject,
     logo: avatar,
     tech: ["React", "GitHub Actions", "Cloudflare Workers", "Lighthouse", "Vitest"],
+  },
+  notifications: {
+    slug: "notification-center",
+    url: "https://notification-center-y1qj.vercel.app",
+    image: notificationsProject,
+    logo: avatar,
+    tech: ["NestJS", "Next.js", "TypeScript", "PostgreSQL", "Docker", "Vitest"],
   },
   ascendere: {
     slug: "ascendere",
@@ -448,6 +456,14 @@ export const content = {
         role: "Autor",
         summary:
           "Este mismo sitio, con un pipeline público de GitHub Actions: lint, pruebas con cobertura, presupuesto de tamaño, Lighthouse, deploy a Cloudflare Workers y smoke tests en producción. Su estado se ve en vivo.",
+      },
+      {
+        ...projectBase.notifications,
+        name: "Notification Center",
+        org: "Proyecto personal",
+        role: "Autor",
+        summary:
+          "Sistema de notificaciones por email, SMS y push, donde cada canal es una estrategia independiente: agregar uno no modifica el resto. API en NestJS con JWT, PostgreSQL y Swagger, frontend en Next.js y despliegue en Vercel, con pruebas unitarias, de integración y de navegador.",
       },
       {
         ...projectBase.ascendere,
@@ -822,6 +838,14 @@ export const content = {
         role: "Author",
         summary:
           "This very site, with a public GitHub Actions pipeline: lint, tests with coverage, a size budget, Lighthouse, deploys to Cloudflare Workers and production smoke tests. Its status is visible live.",
+      },
+      {
+        ...projectBase.notifications,
+        name: "Notification Center",
+        org: "Personal project",
+        role: "Author",
+        summary:
+          "Notification system over email, SMS and push, where each channel is an independent strategy: adding one leaves the rest untouched. NestJS API with JWT, PostgreSQL and Swagger, a Next.js frontend and a Vercel deployment, covered by unit, integration and browser tests.",
       },
       {
         ...projectBase.ascendere,

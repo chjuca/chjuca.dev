@@ -123,6 +123,16 @@ describe("site", () => {
     expect(screen.getByRole("link", { name: "See the live pipeline" })).toHaveAttribute("href", "/pipeline");
   });
 
+  it("links the notification center project to its live demo", () => {
+    renderAt("/projects/notification-center", "en");
+
+    expect(screen.getByRole("heading", { level: 1, name: "Notification Center" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Visit site" })).toHaveAttribute(
+      "href",
+      "https://notification-center-y1qj.vercel.app",
+    );
+  });
+
   it("renders the home page in Spanish", () => {
     renderAt("/");
 
@@ -162,7 +172,7 @@ describe("site", () => {
     renderAt("/projects", "en");
 
     expect(screen.getAllByText("Private project · no public demo")).toHaveLength(2);
-    expect(screen.getAllByText("Live site")).toHaveLength(2);
+    expect(screen.getAllByText("Live site")).toHaveLength(3);
     expect(screen.getByRole("link", { name: "LIV" })).toHaveAttribute("href", "/projects/liv");
   });
 
