@@ -756,7 +756,6 @@ main:focus {
   aspect-ratio: 1;
   border: 5px solid var(--bg);
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--lavender), var(--surface-2));
   object-fit: cover;
   box-shadow: 0 24px 60px rgb(0 0 0 / 0.4);
 }
