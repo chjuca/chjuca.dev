@@ -16,8 +16,8 @@ const PAGES = [
   "/contact",
 ];
 const FILES = [
-  ["/cv/ES-chjuca-Software-Engineer.pdf", "application/pdf"],
-  ["/cv/EN-chjuca-Software-Engineer.pdf", "application/pdf"],
+  ["/cv/ES-chjuca-IA-Engineer.pdf", "application/pdf"],
+  ["/cv/EN-chjuca-IA-Engineer.pdf", "application/pdf"],
   ["/sitemap.xml", "xml"],
   ["/metrics.json", "application/json"],
 ];
